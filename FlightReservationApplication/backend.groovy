@@ -8,7 +8,9 @@ pipeline{
         }
         stage('BUILD'){
             steps{
-                sh '''
+                sh'''
+                    pwd
+                    ls
                     cd FlightReservationApplication
                     docker build -t akashbora02/flight-reservation-backend:latest .
                     docker push akashbora02/flight-reservation-backend:latest
