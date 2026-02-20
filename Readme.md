@@ -11,11 +11,11 @@ git clone https://github.com/shubhamkalsait/Flight-reservation.git
 apt update -y
 apt install mysql-server -y
 mysql_secure_installation
-mysql -uroot -p
+mysql -h rds-endpoint -u root -p
 >> create user linux identified by "Redhat";
->> grant all privileges on *.* to linux;
+>> grant all privileges on flightdb.* to linux;
 >> flush privileges;
->> create flightdb;
+>> create database flightdb;
 >> exit
 ```
 
@@ -23,12 +23,10 @@ mysql -uroot -p
 ```shell
 cd Flight-reservation
 cd FlightReservationSystem
-apt install openjdk-17-jdk -y
-apt install maven -y
-export DATASOURCE_URL="jdbc:mysql://localhost:3306/flightdb"
+apt install openjdk-17-jdk maven -y
+export DATASOURCE_URL="jdbc:mysql://rds-endpoint:3306/flightdb"
 export DATASOURCE_USER="linux"
 export DATASOURCE_PASSWORD="Redhat"
-export FRONTEND_URL="http://localhost:80"
 mvn clean package
 java -jar target/flight*.jar
 ```
@@ -38,7 +36,7 @@ java -jar target/flight*.jar
 cd Flight-reservation
 cd frontend
 apt install nodejs npm -y
-export VITE_API_URL=http://localhost:8080
+export VITE_API_URL=http://external-ip(load_balancer):8080
 npm install
 npm run build
 apt install apache2 -y
