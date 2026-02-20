@@ -37,6 +37,8 @@ pipeline{
     }
     post{
         success{
+            archiveArtifacts artifacts: '*.xml', allowEmptyArchive: true
+            build job: 'Flight-Reservation-frontend', parameters: [string(name: 'FRONTEND_DOCKER_TAG', value: 'latest')]
             echo "Pipeline executed successfully!"
         }
         failure{
