@@ -9,8 +9,6 @@ pipeline{
         stage('BUILD'){
             steps{
                 sh'''
-                    pwd
-                    ls
                     cd FlightReservationApplication
                     docker build -t akashbora02/flight-reservation-backend:latest .
                     docker push akashbora02/flight-reservation-backend:latest
@@ -35,6 +33,17 @@ pipeline{
                     kubectl apply -f k8s/
                 '''
             }
+        }
+    }
+    post{
+        success{
+            echo "Pipeline executed successfully!"
+        }
+        failure{
+            echo "Pipeline failed. Please check the logs for details."
+        }
+        always{
+            cleanWs()
         }
     }
 }
