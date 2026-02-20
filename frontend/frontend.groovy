@@ -19,7 +19,7 @@ pipeline{
             steps{
                 sh '''
                     cd frontend
-                    aws s3 sync build/ s3://flight-reservation-bucket-121 --delete
+                    aws s3 sync dist/ s3://flight-reservation-bucket-121 --delete
                 '''
             }
         }
