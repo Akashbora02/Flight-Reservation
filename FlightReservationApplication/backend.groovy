@@ -42,8 +42,5 @@ pipeline{
         failure{
             echo "Pipeline failed. Please check the logs for details."
         }
-        always{
-            cleanWs()
-        }
     }
 }
